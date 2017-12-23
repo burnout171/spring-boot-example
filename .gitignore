@@ -1,0 +1,17 @@
+# Idea
+.idea
+*.iws
+*.ipr
+
+# Build dir
+target/
+
+# Compiled files
+*.com
+*.dll
+*.exe
+*.o
+*.so
+
+# OS generated files
+.DS_Store
