@@ -1,5 +1,14 @@
 spring:
   name: springbootexample
+  data:
+    mongodb:
+      host: 192.168.56.100
+      port: 27017
+      database: home
+server:
+  port: 8055
+  servlet:
+    context-path: /springbootexample
 scheduling:
   period-in-seconds: 5
   range: 1000
