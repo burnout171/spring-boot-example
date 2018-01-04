@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springbootexample.dao.mongo.MongoDao;
+import springbootexample.dto.mongo.DocumentCounter;
 import springbootexample.dto.mongo.TextDocument;
 
 @RestController
@@ -19,9 +20,14 @@ public class MongoRestController {
         this.dao = dao;
     }
 
-    @RequestMapping("getLastDocuments")
+    @RequestMapping("getLastDocument")
     public TextDocument getLastDocumentByName(@RequestParam(value = "name") final String name) {
         return dao.getLastDocumentByName(name);
+    }
+
+    @RequestMapping("getDocumentsNumber")
+    public DocumentCounter getDocumentsCountByName(@RequestParam(value = "name") final String name) {
+        return dao.getDocumentsNumberByName(name);
     }
 
 }

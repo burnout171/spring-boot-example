@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
+import springbootexample.dto.mongo.DocumentCounter;
 import springbootexample.dto.mongo.TextDocument;
 
 @Component
@@ -24,11 +25,16 @@ public class MongoDao {
     }
 
     public TextDocument getLastDocumentByName(final String name) {
-        TypedAggregation<TextDocument> request = prepareAggregationRequest(name);
+        TypedAggregation<TextDocument> request = lastDocumentByNameRequest(name);
         return mongoTemplate.aggregateStream(request, TextDocument.class).next();
     }
 
-    private TypedAggregation<TextDocument> prepareAggregationRequest(final String name) {
+    public DocumentCounter getDocumentsNumberByName(final String name) {
+        TypedAggregation<TextDocument> request = countDocumentsByName(name);
+        return mongoTemplate.aggregateStream(request, DocumentCounter.class).next();
+    }
+
+    private TypedAggregation<TextDocument> lastDocumentByNameRequest(final String name) {
         MatchOperation match = Aggregation.match(Criteria.where("name").is(name));
         GroupOperation group = Aggregation.group("name")
                 .last("id").as("id")
@@ -37,6 +43,13 @@ public class MongoDao {
                 .last("text").as("text");
         ProjectionOperation projection = Aggregation.project("name", "version", "text")
                 .andExpression("_id").as("id");
+        return Aggregation.newAggregation(TextDocument.class, match, group, projection);
+    }
+
+    private TypedAggregation<TextDocument> countDocumentsByName(final String name) {
+        MatchOperation match = Aggregation.match(Criteria.where("name").is(name));
+        GroupOperation group = Aggregation.group("name").count().as("total");
+        ProjectionOperation projection = Aggregation.project("total");
         return Aggregation.newAggregation(TextDocument.class, match, group, projection);
     }
 }
