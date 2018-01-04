@@ -1,4 +1,4 @@
-package springbootexample.logic;
+package springbootexample.logic.scheduling;
 
 public interface ScheduledTask {
 

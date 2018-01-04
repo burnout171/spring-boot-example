@@ -1,4 +1,4 @@
-package springbootexample.logic;
+package springbootexample.logic.scheduling;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
