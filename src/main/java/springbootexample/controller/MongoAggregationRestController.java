@@ -5,18 +5,18 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springbootexample.dao.mongo.MongoDao;
+import springbootexample.dao.mongo.MongoAggregationDao;
 import springbootexample.dto.mongo.DocumentCounter;
 import springbootexample.dto.mongo.TextDocument;
 
 @RestController
 @Profile("mongo-aggregation")
-public class MongoRestController {
+public class MongoAggregationRestController {
 
-    private final MongoDao dao;
+    private final MongoAggregationDao dao;
 
     @Autowired
-    public MongoRestController(final MongoDao dao) {
+    public MongoAggregationRestController(final MongoAggregationDao dao) {
         this.dao = dao;
     }
 

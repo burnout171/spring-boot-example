@@ -15,12 +15,12 @@ import springbootexample.dto.mongo.TextDocument;
 
 @Component
 @Profile("mongo-aggregation")
-public class MongoDao {
+public class MongoAggregationDao {
 
     private final MongoTemplate mongoTemplate;
 
     @Autowired
-    public MongoDao(MongoTemplate mongoTemplate) {
+    public MongoAggregationDao(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
