@@ -29,5 +29,4 @@ public class MongoAggregationRestController {
     public DocumentCounter getDocumentsCountByName(@RequestParam(value = "name") final String name) {
         return dao.getDocumentsNumberByName(name);
     }
-
 }

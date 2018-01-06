@@ -41,6 +41,9 @@ dependencies {
 	// mongodb
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 
+	// lombok
+	compileOnly('org.projectlombok:lombok:1.16.18')
+
 	// test
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
