@@ -19,10 +19,11 @@ public class ClientRouter {
         this.clients = clients;
     }
 
-    public void send(final String clientName) {
+    public String route(final String clientName) {
         Client client = clients.get(clientName);
         if (Objects.nonNull(client)) {
-            client.send();
+            return client.send();
         }
+        return null;
     }
 }

@@ -20,9 +20,8 @@ public class Client {
         this.restTemplate = restTemplate;
     }
 
-    public void send() {
+    public String send() {
         log.info(name + ".send");
-        restTemplate.getForEntity(url, String.class);
+        return restTemplate.getForEntity(url, String.class).getBody();
     }
-
 }
