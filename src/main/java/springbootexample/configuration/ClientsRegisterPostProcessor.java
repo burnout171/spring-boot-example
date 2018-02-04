@@ -1,6 +1,5 @@
 package springbootexample.configuration;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -23,9 +22,9 @@ public class ClientsRegisterPostProcessor implements BeanDefinitionRegistryPostP
     private final Map<String, ClientProperties> clients = new HashMap<>();
 
     @Override
-    public void postProcessBeanDefinitionRegistry(final BeanDefinitionRegistry registry) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(final BeanDefinitionRegistry registry) {
         for(Map.Entry<String, ClientProperties> entry: clients.entrySet()) {
-            BeanDefinitionBuilder builder =BeanDefinitionBuilder.genericBeanDefinition(ClientBuilder.class)
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(ClientBuilder.class)
                     .addPropertyValue("properties", entry.getValue())
                     .addPropertyReference("restTemplate", "restTemplate");
             registry.registerBeanDefinition(entry.getKey(), builder.getBeanDefinition());
@@ -33,7 +32,16 @@ public class ClientsRegisterPostProcessor implements BeanDefinitionRegistryPostP
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(final ConfigurableListableBeanFactory beanFactory) {
+    }
+
+    @Override
+    public void setEnvironment(final Environment environment) {
+        String allClients = environment.getProperty("clients.all");
+        if (Objects.nonNull(allClients)) {
+            String[] clientNames = allClients.split(",");
+            fillClientProperties(environment, clientNames);
+        }
     }
 
     private void fillClientProperties(final Environment environment, final String[] clientNames) {
@@ -43,15 +51,6 @@ public class ClientsRegisterPostProcessor implements BeanDefinitionRegistryPostP
                     .setName(trimmed)
                     .setUrl(environment.getProperty(String.format("clients.%s.url", trimmed)));
             clients.put(trimmed, properties);
-        }
-    }
-
-    @Override
-    public void setEnvironment(final Environment environment) {
-        String allClients = environment.getProperty("clients.all");
-        if (Objects.nonNull(allClients)) {
-            String[] clientNames = allClients.split(",");
-            fillClientProperties(environment, clientNames);
         }
     }
 }

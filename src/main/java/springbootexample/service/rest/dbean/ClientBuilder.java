@@ -10,12 +10,12 @@ public class ClientBuilder implements FactoryBean<Client> {
     private RestTemplate restTemplate;
 
     @Override
-    public Client getObject() throws Exception {
+    public Client getObject() {
         return new Client(properties.getName(), properties.getUrl(), restTemplate);
     }
 
     @Override
-    public Class<?> getObjectType() {
+    public Class<Client> getObjectType() {
         return Client.class;
     }
 
