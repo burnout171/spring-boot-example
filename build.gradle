@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.6.RELEASE'
+		springBootVersion = '2.1.0.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -13,7 +13,7 @@ buildscript {
 }
 
 plugins {
-	id 'io.spring.dependency-management' version '1.0.3.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.6.RELEASE'
 }
 
 apply plugin: 'java'
@@ -42,7 +42,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 
 	// lombok
-	compileOnly('org.projectlombok:lombok:1.18.2')
+	compileOnly('org.projectlombok:lombok')
 
 	// test
 	testCompile('org.springframework.boot:spring-boot-starter-test')
